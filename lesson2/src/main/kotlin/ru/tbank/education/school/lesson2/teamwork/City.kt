@@ -21,8 +21,7 @@ val data: Map<String, Map<String, Map<String, Map<String, Set<Int>>>>> = mapOf(
             "Минский" to mapOf(
                 "Шоссе" to setOf(4, 1, 3, 6),
                 "Генерала дорохова" to setOf(1, 2, 3, 4, 6, 8),
-            )
-        ),
+            )),
         "ЦАО" to mapOf(
             "Тверской" to mapOf(
                 "Тверская" to setOf(2, 4, 5, 6, 7),
@@ -30,17 +29,14 @@ val data: Map<String, Map<String, Map<String, Map<String, Set<Int>>>>> = mapOf(
                 "Красная площадь" to setOf(1, 2, 3, 4, 6, 8),
                 "Пушкинская" to setOf(1, 2, 3, 4, 6, 8),
                 "Красная площадь" to setOf(1, 2, 3, 4, 6, 8),
-            ),
-        ),
+            ),),
         "ВАО" to mapOf(
             "Митино" to mapOf(
                 "Шоссе" to setOf(3, 4, 5, 6, 7),
                 "Ворота" to setOf(2),
-            )
-        )
+            ))
     ),
-    "Питер" to mapOf(
-        "КАД" to mapOf(
+    "Питер" to mapOf("КАД" to mapOf(
             "Центральный" to mapOf(
                 "Невский" to setOf(1, 2, 3, 4, 6, 7, 8),
             ),
@@ -54,9 +50,28 @@ val data: Map<String, Map<String, Map<String, Map<String, Set<Int>>>>> = mapOf(
 )
 
 fun main() {
+    data.forEach { (city, districts) ->
+        districts.forEach { (district, neighborhoods) ->
+            // Проверяем, больше ли количество улиц, чем количество районов в округе
+            if (neighborhoods.size > districts.size) {
+                neighborhoods.forEach { (neighborhood, streets) ->
+                    streets.forEach { (street, houseNumbers) ->
+                        val maxHouseNumber = houseNumbers.maxOrNull()
+                        if (maxHouseNumber != null) {
+                            val missingHouses = (1..maxHouseNumber).filter { it !in houseNumbers }
 
-    // все пропущенные дома, в формате 'город, округ, район, улица, номера дома'
-
-
-
+                            if (missingHouses.size > houseNumbers.size) {
+                                println("Город: $city, Округ: $district, Район: $neighborhood, Улица: $street")
+                                println("Пропущенные дома: $missingHouses")
+                                println("Существующие дома: $houseNumbers\n")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+    //только в тех районах где улиц больше чем районов в округе
+    //кольчество пропущеных домов больше чем существующих
+
