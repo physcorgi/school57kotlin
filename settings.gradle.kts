@@ -16,7 +16,7 @@ rootProject.name = "school57kotlin"
 //include("lesson3")
 //include("lesson4")
 include("lesson5")
-include("lesson6")
+//include("lesson6")
 include("lesson7")
 include("simple")
 include("lesson8")
